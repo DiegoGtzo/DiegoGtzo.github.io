@@ -119,3 +119,11 @@ h1 {
     margin: 0 10px;
 }
 
+.progress {
+    height: 20px; /* Asegúrate de que la barra de progreso sea lo suficientemente alta */
+}
+
+.progress-bar {
+    background-color: blue; /* Color visible para la barra de progreso */
+}
+
