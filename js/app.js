@@ -425,19 +425,6 @@ function updateBatteryUI(battery) {
     batteryLevelElement.setAttribute('aria-valuenow', levelPercent);
     document.getElementById('batteryPercentage').textContent = levelPercent.toFixed(0) + '%';
 
-    // ...
-}
-
-// ...
-
-
-    // Actualizar UI de batería
-    var levelPercent = battery.level * 100;
-    var batteryLevelElement = document.getElementById('batteryLevel');
-    batteryLevelElement.style.width = levelPercent + '%';
-    batteryLevelElement.setAttribute('aria-valuenow', levelPercent);
-    document.getElementById('batteryPercentage').textContent = levelPercent + '%';
-
     // Cambiar colores según el nivel
     batteryLevelElement.classList.remove('bg-success', 'bg-warning', 'bg-danger');
     if (levelPercent > 20) {
