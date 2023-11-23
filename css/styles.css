@@ -104,4 +104,18 @@ h1 {
     margin-left: 220px;
     padding: 20px;
 }
+.battery-container {
+    display: flex;
+    align-items: center;
+}
+
+.battery-icon {
+    margin-right: 10px;
+    font-size: 24px; /* Ajusta el tamaño según tus necesidades */
+}
+
+.progress {
+    width: 100%; /* Ajusta según el espacio disponible */
+    margin: 0 10px;
+}
 
