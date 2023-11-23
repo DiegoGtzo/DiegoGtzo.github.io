@@ -418,34 +418,23 @@ if ('getBattery' in navigator || ('battery' in navigator && 'Promise' in window)
     handleChange('Battery level changed to ' + this.level + '');
   }
 
-function updateBatteryUI(battery) {
-    var levelPercent = battery.level * 100;
-    var batteryLevelElement = document.getElementById('batteryLevel');
-    batteryLevelElement.style.width = levelPercent + '%';
-    batteryLevelElement.setAttribute('aria-valuenow', levelPercent);
-    document.getElementById('batteryPercentage').textContent = levelPercent.toFixed(0) + '%';
-
-    // Cambiar colores según el nivel
-    batteryLevelElement.classList.remove('bg-success', 'bg-warning', 'bg-danger');
-    if (levelPercent > 20) {
-        batteryLevelElement.classList.add('bg-success');
-    } else if (levelPercent > 10) {
-        batteryLevelElement.classList.add('bg-warning');
-    } else {
-        batteryLevelElement.classList.add('bg-danger');
-    }
+  var batteryPromise;
+  
+  if ('getBattery' in navigator) {
+    batteryPromise = navigator.getBattery();
+  } else {
+    batteryPromise = Promise.resolve(navigator.battery);
+  }
+  
+  batteryPromise.then(function (battery) {
+    document.getElementById('charging').innerHTML = battery.charging ? 'charging' : 'discharging';
+    document.getElementById('chargingTime').innerHTML = battery.chargingTime + ' s';
+    document.getElementById('dischargingTime').innerHTML = battery.dischargingTime + ' s';
+    document.getElementById('level').innerHTML = battery.level;
+    
+    battery.addEventListener('chargingchange', onChargingChange);
+    battery.addEventListener('chargingtimechange', onChargingTimeChange);
+    battery.addEventListener('dischargingtimechange', onDischargingTimeChange);
+    battery.addEventListener('levelchange', onLevelChange);
+  });
 }
-
-if ('getBattery' in navigator) {
-    navigator.getBattery().then(function(battery) {
-        // Actualizar la UI inicialmente
-        updateBatteryUI(battery);
-
-        // Escuchar cambios en el estado de la batería
-        battery.addEventListener('chargingchange', function() { updateBatteryUI(battery); });
-        battery.addEventListener('chargingtimechange', function() { updateBatteryUI(battery); });
-        battery.addEventListener('dischargingtimechange', function() { updateBatteryUI(battery); });
-        battery.addEventListener('levelchange', function() { updateBatteryUI(battery); });
-    });
-}
-
