@@ -419,11 +419,17 @@ if ('getBattery' in navigator || ('battery' in navigator && 'Promise' in window)
   }
 
 function updateBatteryUI(battery) {
-    // Actualizar texto
-    document.getElementById('charging').textContent = battery.charging ? 'cargando' : 'descargando';
-    document.getElementById('chargingTime').textContent = battery.chargingTime + ' s';
-    document.getElementById('dischargingTime').textContent = battery.dischargingTime + ' s';
-    document.getElementById('level').textContent = (battery.level * 100) + '%';
+    var levelPercent = battery.level * 100;
+    var batteryLevelElement = document.getElementById('batteryLevel');
+    batteryLevelElement.style.width = levelPercent + '%';
+    batteryLevelElement.setAttribute('aria-valuenow', levelPercent);
+    document.getElementById('batteryPercentage').textContent = levelPercent.toFixed(0) + '%';
+
+    // ...
+}
+
+// ...
+
 
     // Actualizar UI de batería
     var levelPercent = battery.level * 100;
